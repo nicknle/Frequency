@@ -1,0 +1,118 @@
+﻿    /*public static void FrequencyMethod(string line)
+     {
+         int[] wave = line.Split(' ').Select(h => Int32.Parse(h)).ToArray();
+         int[] dw = new int[wave.Length];
+         int zRolMax = 0;
+         int oldMax = 0;
+         List<int> wavePeaks = new List<int>();
+         List<int> dwRollingSum = new List<int>();
+         List<int> maxRollTens = new List<int>();
+         for (int i = 1; i < wave.Length; i++)
+         {
+             dw[i] = wave[i] - wave[i - 1];
+         }
+
+         for (int i = 11; i < dw.Length - 1; i++)
+         {
+             int dwRollingTenSum = 0;
+             for (int q = i - 10; q < i; q++)
+             {
+                 dwRollingTenSum = dwRollingTenSum + dw[q];
+             }
+             dwRollingSum.Add(dwRollingTenSum);
+         }
+
+         for (int i = 10; i < dwRollingSum.Count; i++)
+         {
+             int maxRollingTen = -127;
+             for (int q = i - 10; q <= i; q++)
+             {
+                 if (dwRollingSum[q] > maxRollingTen)
+                 {
+                     maxRollingTen = dwRollingSum[q];
+                 }
+
+             }
+             maxRollTens.Add(maxRollingTen);
+             if (maxRollingTen == oldMax)
+             {
+                 zRolMax++;
+             }
+             else
+             {
+                 if (zRolMax > 4)
+                 {
+                     wavePeaks.Add(i);
+                 }
+                 zRolMax = 0;
+             }
+             oldMax = maxRollingTen;
+         }
+         Console.WriteLine(wavePeaks.Count * 10);
+     }*/
+
+	     public static void FrequencyWithFourier(string line)
+    {
+        int[] wave = line.Split(' ').Select(h => Int32.Parse(h)).ToArray();
+        int maxWave = wave[0];
+        int minWave = wave[0];
+        int maxNotSetCount = 0;
+        int minNotSetCount = 0;
+        int peakCount = 0;
+        int troughCount = 0;
+        float deltaPeaks = 0;
+        float avgFrequency = 0;
+        List<int> wavePeaks = new List<int>();
+        List<int> waveTroughs = new List<int>();
+
+        for (int i = 1; i < wave.Length; i++)
+        {
+            if (wave[i] > maxWave)
+            {
+                maxWave = wave[i];
+                maxNotSetCount = 0;
+            }
+            else if (wave[i] < minWave)
+            {
+                minWave = wave[i];
+                minNotSetCount = 0;
+            }
+            else
+            {
+                maxNotSetCount++;
+                minNotSetCount++;
+                if (maxNotSetCount == 9)
+                {
+                    peakCount++;
+                    wavePeaks.Add(i);
+                }
+                else if (minNotSetCount == 9)
+                {
+                    troughCount++;
+                    waveTroughs.Add(i);
+                }
+            }
+        }
+
+        if (peakCount > troughCount)
+        {
+
+
+            for (int i = 1; i < wavePeaks.Count; i++)
+            {
+                deltaPeaks = 20000 / (wavePeaks[i] - wavePeaks[i - 1]);
+                avgFrequency += deltaPeaks / (wavePeaks.Count - 1);
+            }
+        }
+        else
+        {
+
+
+            for (int i = 1; i < waveTroughs.Count; i++)
+            {
+                deltaPeaks = 20000 / (waveTroughs[i] - waveTroughs[i - 1]);
+                avgFrequency += deltaPeaks / (waveTroughs.Count - 1);
+            }
+        }
+        Console.WriteLine(Math.Round(avgFrequency, 0));
+    }

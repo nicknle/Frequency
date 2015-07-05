@@ -1,0 +1,52 @@
+    /*public static void FrequencyMethod(string line)
+     {
+         int[] wave = line.Split(' ').Select(h => Int32.Parse(h)).ToArray();
+         int[] dw = new int[wave.Length];
+         int zRolMax = 0;
+         int oldMax = 0;
+         List<int> wavePeaks = new List<int>();
+         List<int> dwRollingSum = new List<int>();
+         List<int> maxRollTens = new List<int>();
+         for (int i = 1; i < wave.Length; i++)
+         {
+             dw[i] = wave[i] - wave[i - 1];
+         }
+
+         for (int i = 11; i < dw.Length - 1; i++)
+         {
+             int dwRollingTenSum = 0;
+             for (int q = i - 10; q < i; q++)
+             {
+                 dwRollingTenSum = dwRollingTenSum + dw[q];
+             }
+             dwRollingSum.Add(dwRollingTenSum);
+         }
+
+         for (int i = 10; i < dwRollingSum.Count; i++)
+         {
+             int maxRollingTen = -127;
+             for (int q = i - 10; q <= i; q++)
+             {
+                 if (dwRollingSum[q] > maxRollingTen)
+                 {
+                     maxRollingTen = dwRollingSum[q];
+                 }
+
+             }
+             maxRollTens.Add(maxRollingTen);
+             if (maxRollingTen == oldMax)
+             {
+                 zRolMax++;
+             }
+             else
+             {
+                 if (zRolMax > 4)
+                 {
+                     wavePeaks.Add(i);
+                 }
+                 zRolMax = 0;
+             }
+             oldMax = maxRollingTen;
+         }
+         Console.WriteLine(wavePeaks.Count * 10);
+     }*/
